@@ -32,7 +32,7 @@ public class SampleOrder {
 
     private void buySomething() {
         System.out.println("What kind of bike would you like?");
-        System.out.println("YOur options are :n1 for Accessories \n 2 for a bike\n3 for both");
+        System.out.println("YOur options are :\n1 for Accessories \n2 for a Bike");
         String type = userIn.next();
         validateSomething(type);
     }
@@ -45,9 +45,25 @@ public class SampleOrder {
         validateBikeType(type);
         frameColorOffer(bikeChoice);
         offerUpgrades();
-        // Order done
-        // ask for accessories
-        // Send order to receipt
+        bikeOrder.add(bikeChoice);
+        anotherBike();
+        orderDone();
+    }
+
+    private void orderDone() {
+        new SampleReceipt(bikeOrder, accessoryOrder);
+    }
+
+    private void anotherBike() {
+        System.out.println("Do you want to add any other bikes? yes or no");
+        String answer = userIn.next();
+        validateAnotherBike(answer);
+    }
+
+    private void offerAccessories() {
+        System.out.println("Do you want to buy any accessories?");
+        String answer = userIn.next();
+        validateOffer(answer);
     }
 
     private void buyAccessories() {
@@ -130,11 +146,40 @@ public class SampleOrder {
                 buyAccessories();
                 break;
             case "no":
-                //finish order
+                orderDone();
                 break;
             default:
                 System.out.println("You have entered an invalid choice");
                 moreAccessories();
+        }
+    }
+
+    private void validateOffer(String answer) {
+        switch(answer) {
+            case "yes":
+                buyAccessories();
+                break;
+            case "no":
+                break;
+            default:
+                System.out.println("You have entered an invalid choice");
+                offerAccessories();
+        }
+    }
+
+    private void validateAnotherBike(String answer) {
+        switch(answer.toLowerCase()) {
+            case "yes":
+                bikeChoice = null;
+                buyBike();
+                break;
+            case "no":
+                offerAccessories();
+                // offer accessories
+                break;
+            default:
+                System.out.println("You have entered an invalid choice");
+                anotherBike();
         }
     }
 
@@ -216,7 +261,6 @@ public class SampleOrder {
                 buyAccessories();
                 break;
             case "2":
-            case "3":
                 buyBike();
                 break;
             default:

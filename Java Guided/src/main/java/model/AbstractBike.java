@@ -21,11 +21,13 @@ public abstract class AbstractBike implements PriceInterface, BikeInterface {
 
     public abstract String getWheelType();
 
+    public abstract String getOptionName();
+    public abstract double getOptionAmount();
+
     public void setSerial(String serial) {
         this.serial = serial;
     }
 
-    @Override
     public String getSerial() {
         return serial;
     }
@@ -53,8 +55,7 @@ public abstract class AbstractBike implements PriceInterface, BikeInterface {
 
     @Override
     public String toString() {
-        String price = String.format("%9s", "$" + getPrice());
-        return getClass().getSimpleName() + price + " Model# " + getPrefix() + " " +
-                getColor() + " Frame with serial# " + getSerial();
+        String price = String.format("%24s", "$" + getPrice());
+        return "  " + getClass().getSimpleName() + price;
     }
 }
